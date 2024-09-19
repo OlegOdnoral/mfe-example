@@ -1,27 +1,33 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, Input, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationSkipped, NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { filter, tap } from "rxjs";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { JsonPipe } from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ RouterOutlet, TranslateModule, RouterLink ],
+  imports: [ RouterOutlet, TranslateModule, RouterLink, JsonPipe ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
+
   title = 'mfe-example';
+
+  contextconfiguration!: unknown;
 
   readonly #router = inject(Router);
   readonly #destroyRef = inject(DestroyRef);
   readonly #translate = inject(TranslateService);
+  readonly #elementRef = inject(ElementRef);
 
   readonly #defaultLang = 'en'
   readonly #langQueryName: string = "shell-lang";
 
   ngOnInit(): void {
+    this.contextconfiguration = JSON.parse(this.#elementRef.nativeElement.getAttribute('contextconfiguration'))
     this.#trackLocale();
   }
 
