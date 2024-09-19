@@ -226,6 +226,22 @@
         </defs>
       </svg>
       <h1>Hello, {{ title }}</h1>
+      <h3>Translation: {{ 'test.phrase' | translate }}</h3>
+      <div>
+        <span>
+          <a
+            [routerLink]="['']"
+            [queryParams]="{'shell-lang': 'en'}"
+          >EN</a>
+        </span>
+        &nbsp;
+        <span>
+          <a
+            [routerLink]="['']"
+            [queryParams]="{'shell-lang': 'nl'}"
+          >NL</a>
+        </span>
+      </div>
       <p>Congratulations! Your app is running. 🎉</p>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
